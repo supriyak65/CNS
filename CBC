@@ -1,0 +1,31 @@
+import javax.crypto.Cipher; 
+import javax.crypto.KeyGenerator; 
+import javax.crypto.SecretKey; 
+import javax.crypto.spec.IvParameterSpec; 
+import java.util.Base64; 
+public class CBCExample { 
+ public static void main(String[] args) throws Exception { 
+ String text = "Hello CBC Mode"; 
+ 
+ // Generate AES key 
+ SecretKey key = KeyGenerator.getInstance("AES").generateKey(); 
+ 
+ // Create IV (16 bytes for AES) 
+ byte[] ivBytes = "1234567890abcdef".getBytes(); 
+ IvParameterSpec iv = new IvParameterSpec(ivBytes); 
+ 
+ // Encrypt 
+ Cipher encCipher = Cipher.getInstance("AES/CBC/PKCS5Padding"); 
+ encCipher.init(Cipher.ENCRYPT_MODE, key, iv); 
+ String encrypted = Base64.getEncoder().encodeToString(encCipher.doFinal(text.getBytes())); 
+ 
+ // Decrypt 
+ Cipher decCipher = Cipher.getInstance("AES/CBC/PKCS5Padding"); 
+ decCipher.init(Cipher.DECRYPT_MODE, key, iv); 
+ String decrypted = new String(decCipher.doFinal(Base64.getDecoder().decode(encrypted))); 
+ 
+ System.out.println("Original : " + text); 
+ System.out.println("Encrypted : " + encrypted); 
+ System.out.println("Decrypted : " + decrypted); 
+ } 
+}
