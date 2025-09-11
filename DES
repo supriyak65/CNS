@@ -1,0 +1,16 @@
+import javax.crypto.*; 
+import javax.crypto.spec.SecretKeySpec; 
+import java.util.*; 
+public class DES 
+{ 
+ public static void main(String[] args)throws Exception 
+ { 
+ SecretKey k=new SecretKeySpec("12345678".getBytes(),"DES"); 
+ Cipher c=Cipher.getInstance("DES"); 
+ c.init(Cipher.ENCRYPT_MODE,k); 
+ byte[] enc=c.doFinal("HELLO".getBytes()); 
+ System.out.println("Encrypted: "+Base64.getEncoder().encodeToString(enc)); 
+ c.init(Cipher.DECRYPT_MODE,k); 
+ System.out.println("Decrypted: "+new String(c.doFinal(enc))); 
+ } 
+} 
