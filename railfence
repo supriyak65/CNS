@@ -1,0 +1,17 @@
+public class RailFence {
+  static String encrypt(String t){
+    StringBuilder r1=new StringBuilder(), r2=new StringBuilder();
+    for(int i=0;i<t.length();i++)
+      if(i%2==0) r1.append(t.charAt(i)); else r2.append(t.charAt(i));
+    return r1.toString()+r2.toString();
+  }
+  static String decrypt(String c){
+    int mid=c.length()/2; StringBuilder d=new StringBuilder();
+    for(int i=0;i<mid;i++){ d.append(c.charAt(i)); if(i+mid<c.length()) d.append(c.charAt(i+mid)); }
+    return d.toString();
+  }
+  public static void main(String[] a){
+    String t="HELLOWORLD", e=encrypt(t), d=decrypt(e);
+    System.out.println("Enc: "+e); System.out.println("Dec: "+d);
+  }
+}
