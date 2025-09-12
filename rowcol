@@ -1,0 +1,34 @@
+public class RowColumn {
+  static String encrypt(String t, int cols) {
+    int rows = (int)Math.ceil((double)t.length()/cols);
+    char[][] m = new char[rows][cols];
+    int k=0;
+    for(int i=0;i<rows;i++)
+      for(int j=0;j<cols;j++)
+        m[i][j] = (k<t.length()? t.charAt(k++):'X'); // padding
+    StringBuilder e = new StringBuilder();
+    for(int j=0;j<cols;j++)
+      for(int i=0;i<rows;i++)
+        e.append(m[i][j]);
+    return e.toString();
+  }
+  static String decrypt(String c, int cols) {
+    int rows = (int)Math.ceil((double)c.length()/cols);
+    char[][] m = new char[rows][cols];
+    int k=0;
+    for(int j=0;j<cols;j++)
+      for(int i=0;i<rows;i++)
+        m[i][j] = c.charAt(k++);
+    StringBuilder d = new StringBuilder();
+    for(int i=0;i<rows;i++)
+      for(int j=0;j<cols;j++)
+        d.append(m[i][j]);
+    return d.toString();
+  }
+  public static void main(String[] a){
+    String t="HELLOWORLD"; int cols=4;
+    String e=encrypt(t,cols), d=decrypt(e,cols);
+    System.out.println("Enc: "+e);
+    System.out.println("Dec: "+d);
+  }
+}
